@@ -27,6 +27,7 @@ char* getCRC(char *packet,int packetSize,char *plyn,int plynSize,int crcSize)
 			replace(i,packet,bitXOR(i,packet,plyn,plynSize));
 		}
 	}
+	return packet+packetSize;
 }
 
 char* bitXOR(int index,char *b1,char *plyn,int plynSize)
