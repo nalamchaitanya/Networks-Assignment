@@ -25,6 +25,10 @@
 		600511E61AD9132600CF8D80 /* Server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Server.c; sourceTree = "<group>"; };
 		600511E71AD9159C00CF8D80 /* Entropy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entropy.h; sourceTree = "<group>"; };
 		600511E81AD9164200CF8D80 /* Entropy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Entropy.c; sourceTree = "<group>"; };
+		600511EA1AD91D2000CF8D80 /* Huffman.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Huffman.c; sourceTree = "<group>"; usesTabs = 1; };
+		600511EB1AD91D2000CF8D80 /* Huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Huffman.h; path = ../Huffman.h; sourceTree = "<group>"; };
+		600511EC1AD9366E00CF8D80 /* Packet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Packet.c; sourceTree = "<group>"; };
+		600511ED1AD9366E00CF8D80 /* Packet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Packet.h; path = ../Packet.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -79,6 +83,8 @@
 				600511E41AD9132600CF8D80 /* include */,
 				600511E61AD9132600CF8D80 /* Server.c */,
 				600511E81AD9164200CF8D80 /* Entropy.c */,
+				600511EA1AD91D2000CF8D80 /* Huffman.c */,
+				600511EC1AD9366E00CF8D80 /* Packet.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -86,6 +92,8 @@
 		600511E41AD9132600CF8D80 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				600511ED1AD9366E00CF8D80 /* Packet.h */,
+				600511EB1AD91D2000CF8D80 /* Huffman.h */,
 				600511E51AD9132600CF8D80 /* DgFunctions.h */,
 				600511E71AD9159C00CF8D80 /* Entropy.h */,
 			);
