@@ -9,15 +9,87 @@
 /* Begin PBXFileReference section */
 		600511D21AD9041C00CF8D80 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		600511D31AD909A000CF8D80 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
+		600511D51AD9132600CF8D80 /* Client */ = {isa = PBXFileReference; lastKnownFileType = file; path = Client; sourceTree = "<group>"; };
+		600511D61AD9132600CF8D80 /* Server */ = {isa = PBXFileReference; lastKnownFileType = file; path = Server; sourceTree = "<group>"; };
+		600511D81AD9132600CF8D80 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		600511D91AD9132600CF8D80 /* HuffmanTransceiver */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = HuffmanTransceiver; sourceTree = "<group>"; };
+		600511DB1AD9132600CF8D80 /* Client.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Client.o; sourceTree = "<group>"; };
+		600511DC1AD9132600CF8D80 /* DgClient.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = DgClient.o; sourceTree = "<group>"; };
+		600511DD1AD9132600CF8D80 /* DgEcho.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = DgEcho.o; sourceTree = "<group>"; };
+		600511DE1AD9132600CF8D80 /* Server.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Server.o; sourceTree = "<group>"; };
+		600511DF1AD9132600CF8D80 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		600511E11AD9132600CF8D80 /* Client.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Client.c; sourceTree = "<group>"; };
+		600511E21AD9132600CF8D80 /* DgClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DgClient.c; sourceTree = "<group>"; };
+		600511E31AD9132600CF8D80 /* DgEcho.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DgEcho.c; sourceTree = "<group>"; };
+		600511E51AD9132600CF8D80 /* DgFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DgFunctions.h; sourceTree = "<group>"; };
+		600511E61AD9132600CF8D80 /* Server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Server.c; sourceTree = "<group>"; };
+		600511E71AD9159C00CF8D80 /* Entropy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Entropy.h; sourceTree = "<group>"; };
+		600511E81AD9164200CF8D80 /* Entropy.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Entropy.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		600511C71AD903B500CF8D80 = {
 			isa = PBXGroup;
 			children = (
+				600511D41AD9132600CF8D80 /* bin */,
+				600511D71AD9132600CF8D80 /* doc */,
+				600511D91AD9132600CF8D80 /* HuffmanTransceiver */,
+				600511DA1AD9132600CF8D80 /* obj */,
+				600511DF1AD9132600CF8D80 /* README.md */,
+				600511E01AD9132600CF8D80 /* src */,
 				600511D31AD909A000CF8D80 /* Makefile */,
 				600511D21AD9041C00CF8D80 /* main.cpp */,
 			);
+			sourceTree = "<group>";
+		};
+		600511D41AD9132600CF8D80 /* bin */ = {
+			isa = PBXGroup;
+			children = (
+				600511D51AD9132600CF8D80 /* Client */,
+				600511D61AD9132600CF8D80 /* Server */,
+			);
+			path = bin;
+			sourceTree = "<group>";
+		};
+		600511D71AD9132600CF8D80 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				600511D81AD9132600CF8D80 /* ReadMe.txt */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
+		600511DA1AD9132600CF8D80 /* obj */ = {
+			isa = PBXGroup;
+			children = (
+				600511DB1AD9132600CF8D80 /* Client.o */,
+				600511DC1AD9132600CF8D80 /* DgClient.o */,
+				600511DD1AD9132600CF8D80 /* DgEcho.o */,
+				600511DE1AD9132600CF8D80 /* Server.o */,
+			);
+			path = obj;
+			sourceTree = "<group>";
+		};
+		600511E01AD9132600CF8D80 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				600511E11AD9132600CF8D80 /* Client.c */,
+				600511E21AD9132600CF8D80 /* DgClient.c */,
+				600511E31AD9132600CF8D80 /* DgEcho.c */,
+				600511E41AD9132600CF8D80 /* include */,
+				600511E61AD9132600CF8D80 /* Server.c */,
+				600511E81AD9164200CF8D80 /* Entropy.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		600511E41AD9132600CF8D80 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				600511E51AD9132600CF8D80 /* DgFunctions.h */,
+				600511E71AD9159C00CF8D80 /* Entropy.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +253,7 @@
 				600511D11AD903B500CF8D80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
