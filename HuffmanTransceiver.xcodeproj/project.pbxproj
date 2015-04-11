@@ -6,10 +6,17 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		600511D21AD9041C00CF8D80 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		600511D31AD909A000CF8D80 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		600511C71AD903B500CF8D80 = {
 			isa = PBXGroup;
 			children = (
+				600511D31AD909A000CF8D80 /* Makefile */,
+				600511D21AD9041C00CF8D80 /* main.cpp */,
 			);
 			sourceTree = "<group>";
 		};
