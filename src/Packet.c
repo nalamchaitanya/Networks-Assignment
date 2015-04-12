@@ -25,6 +25,9 @@ Packet* _makePacket( char* data, int length ){
 Packet* variableSlice( char* data, int length, long* codebook ){
     
     int bitptr = 0;
+    Packet* stream;
+    
+    Packet* curr;
     for ( i = 0; i < length; i++ ) {
         char c = data[i];
         int len = floor( log( codebook[(int)c] )/log( 2 ) );// Obtain code length. this is a slightly sub-optimal method.
