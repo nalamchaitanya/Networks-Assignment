@@ -26,7 +26,8 @@ double calculateEntropy( char* data, int size )
     }
     double length = size;
     double *prob = (double*)malloc(sizeof(double)*256);
-    double entropy = 0;
+    double entropy;
+    entropy = 0;
     for(i =0;i<256;i++)
     {
     	prob[i] = freq[i]/length;
