@@ -22,15 +22,23 @@ Packet* _makePacket( char* data, int length ){
 // The operations of putting together a codebook and cutting it up into packets have been
 // merged into one for simplicity.
 
+void setPacketBit( int bit, Packet* p ){
+    // in progress.
+    char* dat = p->data;
+    dat[0];
+}
+
 Packet* variableSlice( char* data, int length, long* codebook ){
     
     int bitptr = 0;
     Packet* stream;
     
     Packet* curr;
+    
     for ( i = 0; i < length; i++ ) {
         char c = data[i];
         int len = floor( log( codebook[(int)c] )/log( 2 ) );// Obtain code length. this is a slightly sub-optimal method.
+        
         
         
     }
