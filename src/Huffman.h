@@ -11,5 +11,21 @@
 
 #include <stdio.h>
 
+typedef long long LLONG;
+
+
+typedef struct _Node{
+    int freq;
+    char src;
+    
+    // for the huffman tree.
+    Node* left;
+    Node* right;
+    
+    // holds the next pointer.
+    Node* next;
+    
+} Node;
+
 void huffmanCode( int* frequency, int* codebook );
 #endif /* defined(__HuffmanTransceiver__Huffman__) */

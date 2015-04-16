@@ -28,7 +28,32 @@ void setPacketBit( int bit, Packet* p ){
     dat[0];
 }
 
-Packet* variableSlice( char* data, int length, long* codebook ){
+void fillChar( char* c, int bitptr, LLONG x, int len, int start ){
+    *(c) &= ~( ( 1 << len ) - 1 ) << bitptr;// Set bits of interest to 0.
+    *(c) |= ( ( x >> start ) & ( ( 1 << len ) - 1 ) ) << bitptr;// Set bits of interest to X[ start.. start+len ].
+}
+
+void fillPacket( Packet* p, int bitptr, LLONG x, int len, int start ){
+    while( true ){
+        if (bitptr % 8 != 0 ) {
+            fillChar( p->data + (bitptr / 8), bitptr % 8, x, len, start );
+            if( len < 8 ){
+                return;
+            }else{
+                len -= bitptr % 8;
+            }
+            
+        }else{
+            fillChar( p->data + (bitptr / 8), 0, x, len, start );
+            if( len < 8 )
+                return;
+            
+            len -= 8;
+        }
+    }
+}
+
+Packet* variableSlice( char* data, int length, LLONG* codebook ){
     
     int bitptr = 0;
     Packet* stream;
@@ -37,9 +62,28 @@ Packet* variableSlice( char* data, int length, long* codebook ){
     
     for ( i = 0; i < length; i++ ) {
         char c = data[i];
+        // Note here that while computing codebook lengths
         int len = floor( log( codebook[(int)c] )/log( 2 ) );// Obtain code length. this is a slightly sub-optimal method.
         
-        
+        LLONG x = codebook[(int)c];
+        while( true ){
+            if (bitptr % length != 0 ) {
+                fillChar( p + (bitptr / length), bitptr % length, x, len, start );
+                if( len < length ){
+                    return;
+                }else{
+                    len -= bitptr % length;
+                }
+                
+            }else{
+                fillPacket( p + (bitptr / length), 0, x, len, start );
+                if( len < length )
+                    return;
+                
+                len -= length;
+            }
+        }
         
     }
+    
 }

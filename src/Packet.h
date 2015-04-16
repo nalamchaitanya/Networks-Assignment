@@ -11,10 +11,7 @@
 
 #include <stdio.h>
 
-typedef struct _Packet{
-    char* data;
-    int length;
-} Packet;
+
 
 // Make a packet of a particular length.
 Packet* _makePacket( char* data, int length );

@@ -10,19 +10,6 @@
 
 
 
-typedef struct _Node{
-    int freq;
-    char src;
-    
-    // for the huffman tree.
-    Node* left;
-    Node* right;
-    
-    // holds the next pointer.
-    Node* next;
-    
-} Node;
-
 Node* newNode( char src, int freq ){
     Node* n = malloc( sizeof(Node) );
     n->freq = freq;
@@ -70,7 +57,7 @@ Node* insertSorted( Node* arr, Node* n ){
 	return arr;
 }
 
-void treeToPCodeBook( Node* root, long* pcodebook, long code ){
+void treeToPCodeBook( Node* root, LLONG* pcodebook, LLONG code ){
     if( root->left == NULL ){
         pcodebook[root->src] = code;
     }else{
@@ -79,12 +66,12 @@ void treeToPCodeBook( Node* root, long* pcodebook, long code ){
     }
 }
 
-void huffmanCode( int* frequency, long** codebook, int numChars ){
+void huffmanCode( int* frequency, LLONG** codebook, int numChars ){
     Node* start = makeNodeList( frequency, numChars );
     
     Node* sorted;
     sortNodes( start, &sorted );
-    
+	
     while (true) {
         Node* n1 = sorted;
         Node* n2 = sorted->next;
