@@ -21,11 +21,22 @@ typedef struct _Node{
     // for the huffman tree.
     Node* left;
     Node* right;
+    // for reverse trace.
+    Node* parent;
     
     // holds the next pointer.
     Node* next;
     
 } Node;
 
-void huffmanCode( int* frequency, int* codebook );
+
+typedef struct _BitStream{
+    
+    char bit;
+    BitStream* next;
+    
+} BitStream;
+
+void huffmanCode( int* frequency, BitStream** codebook );
+
 #endif /* defined(__HuffmanTransceiver__Huffman__) */
