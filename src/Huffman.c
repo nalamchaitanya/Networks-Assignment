@@ -44,8 +44,10 @@ Node* makeNodeList( int* frequency, int numChars ){
     return start;
 }
 
-Node* sortNodes( Node* in, Node** out ){
+Node* sortNodes( Node* in, Node** out )
+{
     // Sort by frequency.
+	    
 }
 
 Node* insertSorted( Node* arr, Node* n ){
