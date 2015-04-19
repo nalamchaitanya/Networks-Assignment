@@ -6,11 +6,13 @@
 //  Copyright (c) 2015 Saipraveen B. All rights reserved.
 //
 
-#include "Encoder.h"
+#include "SourceCoder.h"
 #include "Huffman.h"
 #include "Packet.h"
 
-Packet* sourceCode( char* data, int length, int pSize ){
+#include <stdlib.h>
+
+char* sourceCode( char* data, int length ){
     // Get frequencies of Char data here.
     int* frequency;
     // ---
@@ -20,11 +22,29 @@ Packet* sourceCode( char* data, int length, int pSize ){
     int finalLen = 0;
     
     // Produce the huffman codebook.
-    encode( char* data, buffer, &finalLen );
+    //encode( data, buffer, &finalLen );
     
+    Node* root;
+    
+    Node** baseList = malloc( sizeof( Node* ) * 10 );
+    makeHuffmanTree( &root, frequency, 256, baseList );
+    
+    encode( data, length, baseList, buffer, &finalLen );
     
     // Encode and Slice into packets.
-    Packet* packets = makePacketStream( data, length, pSize );
+    return buffer;
+}
+
+char* sourceDecode( char* data, int length, long* frequency, int expectedLen ){
     
-    return packets;
+    Node* root;
+    
+    Node** baseList = malloc( sizeof( Node* ) * 10 );
+    makeHuffmanTree( &root, frequency, 256, baseList );
+    
+    int finalLen = 0;
+    char* buffer = malloc( sizeof( char ) * expectedLen );
+    decode( data, length, root, buffer, &finalLen );
+    return buffer;
+    
 }

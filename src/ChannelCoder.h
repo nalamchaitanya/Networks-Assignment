@@ -10,6 +10,7 @@
 #define __HuffmanTransceiver__ChannelCoder__
 
 #include <stdio.h>
+#include "Packet.h"
 
 // Encode the packet's contents by adding a CRC to the end. Note: this lengthens the channel
 void channelCode( Packet* p );

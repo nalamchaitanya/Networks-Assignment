@@ -8,6 +8,7 @@
 
 #include "include/Entropy.h"
 #include <math.h>
+#include <stdlib.h>
 
 double calculateEntropy( char* data, int size )
 {

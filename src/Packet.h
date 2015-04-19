@@ -13,7 +13,7 @@
 
 
 typedef struct _Packet{
-    Packet* next;
+    struct _Packet* next;
     char* data;
     int length;
 } Packet;
@@ -21,9 +21,7 @@ typedef struct _Packet{
 // Make a packet of a particular length.
 Packet* _makePacket( char* data, int length );
 
-// The operations of putting together a codebook and cutting it up into packets have been
-// merged into one for simplicity.
-
-Packet* variableSlice( char* data, int length, long* codebook );
+// Splices the encoded data into packets.
+Packet* makePacketStream( char* data, int length, int psize );
 
 #endif /* defined(__HuffmanTransceiver__Packet__) */

@@ -19,13 +19,13 @@ typedef struct _Node{
     char src;
     
     // for the huffman tree.
-    Node* left;
-    Node* right;
+    struct _Node* left;
+    struct _Node* right;
     // for reverse trace.
-    Node* parent;
+    struct _Node* parent;
     
     // holds the next pointer.
-    Node* next;
+    struct _Node* next;
     
 } Node;
 
@@ -33,10 +33,12 @@ typedef struct _Node{
 typedef struct _BitStream{
     
     char bit;
-    BitStream* next;
+    struct _BitStream* next;
     
 } BitStream;
 
-void huffmanCode( int* frequency, BitStream** codebook );
+
+void encode( char* data, int length, Node** codebook, char* buffer, int* outLength );
+void makeHuffmanTree( Node** out, int* frequency, int numChars, Node** pListBuf );
 
 #endif /* defined(__HuffmanTransceiver__Huffman__) */

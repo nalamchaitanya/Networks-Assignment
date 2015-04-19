@@ -8,10 +8,10 @@
 
 #include "Huffman.h"
 
-
+#include <stdlib.h>
 
 Node* newNode( char src, int freq ){
-    Node* n = malloc( sizeof(Node) );
+    Node* n = (Node*) malloc( sizeof(Node) );
     n->freq = freq;
     n->src = src;
     n->left = NULL;
@@ -34,6 +34,7 @@ Node* makeNodeList( int* frequency, int numChars ){
 
 Node* sortNodes( Node* in, Node** out ){
     // Sort by frequency.
+	return NULL;
 }
 
 Node* insertSorted( Node* arr, Node* n ){
@@ -45,7 +46,7 @@ Node* insertSorted( Node* arr, Node* n ){
     }
 	
 	Node* curr = arr;
-    while (true) {
+    while (1) {
 		if( n->freq < curr->freq ){
 			prev->next = n;
 			n->next = curr;
@@ -67,18 +68,24 @@ void treeToPCodeBook( Node* root, LLONG* pcodebook, LLONG code ){
     }
 }
 
-void makeHuffmanTree( Node** out, int* frequency, int numChars ){
+void makeHuffmanTree( Node** out, int* frequency, int numChars, Node** pListBuf ){
 	Node* start = makeNodeList( frequency, numChars );
 	
+	// Store base pointers in the list for quick access while encoding.
+	for (int i = 0; i < numChars; i ++ ) {
+		pListBuf[i] = start + i;
+	}
+	
 	Node* sorted;
+	//Assume sorted is a new array.
 	sortNodes( start, &sorted );
 	
-	while (true) {
+	while (1) {
 		Node* n1 = sorted;
 		Node* n2 = sorted->next;
 		if( n2 == NULL )
 			break;
-		Node* merged = newNode( NULL, n1->freq + n2->freq );
+		Node* merged = newNode( 0, n1->freq + n2->freq );
 		
 		merged->left = n1;
 		merged->right = n2;
@@ -91,18 +98,37 @@ void makeHuffmanTree( Node** out, int* frequency, int numChars ){
 		
 	}
 	*out = sorted;
-}
-void huffmanCode( int* frequency, LLONG** codebook, int numChars ){
 	
-	Node* huffTree;
-	makeHuffmanTree( &huffTree, frequency, numChars );
-	
-    long* pcodebook = malloc( sizeof( long ) * numChars );
-    treeToPCodeBook( huffTree, pcodebook, 1 );// 1 is necessary or else 0000 and 000 will be encoded as the same thing.
-	
-	*codebook = pcodebook;
 }
 
+/* Helper functions setBit and traceBit */
+void setBit( char* c, int bitptr, char bit ){
+	*(c) &= ~(1 << bitptr);
+	*(c) |= (bit << bitptr);
+}
+char traceBit( Node* x ){
+	if( x->parent->left == x )
+		return 0;
+	else
+		return 1;
+}
+
+int _fillCharSeq( char* c, int bitptr, Node* x ){
+	if( x->parent->parent == NULL ){
+		// Reached the top
+		// Set bit.
+		char bit = traceBit( x );
+		setBit( c, bitptr, bit );
+		return bitptr + 1;
+	}else{
+		// Go up the tree and set the corresponding bits on the way down.
+		int bitptr = _fillCharSeq( c + (bitptr/8), bitptr, x->parent );
+		// We use recursion to set bits from the top rather than form the bottom.
+		char bit = traceBit( x );
+		setBit( c, bitptr, bit );
+		return bitptr + 1;
+	}
+}
 
 int fillCharSeq( char* c, int bitptr, Node* x ){
 	/*
@@ -131,33 +157,11 @@ int fillCharSeq( char* c, int bitptr, Node* x ){
 	return _fillCharSeq( c, bitptr, x );
 }
 
-char setBit( char* c, int bitptr, char bit ){
-	*(c) &= ~(1 << bitptr);
-	*(c) |= (bit << bitptr);
-}
 
-char traceBit( Node* x ){
-	if( x->parent->left == x )
-		return 0;
-	else
-		return 1;
-}
-int _fillCharSeq( char* c, int bitptr, Node* x ){
-	if( x->parent->parent == NULL ){
-		// Reached the top
-		// Set bit.
-		char bit = traceBit( x );
-		setBit( c, bitptr, bit );
-		return bitptr + 1;
-	}else{
-		// Go up the tree and set the corresponding bits on the way down.
-		int bitptr = _fillCharSeq( c + (bitptr/8), bitptr, x->parent );
-		// We use recursion to set bits from the top rather than form the bottom.
-		char bit = traceBit( x );
-		setBit( c, bitptr, bit );
-		return bitptr + 1;
-	}
-}
+
+
+
+
 
 void encode( char* data, int length, Node** codebook, char* buffer, int* outLength ){
 	
@@ -170,8 +174,8 @@ void encode( char* data, int length, Node** codebook, char* buffer, int* outLeng
 	for ( i = 0; i < length; i++ ) {
 		char c = data[i];
 		// Note here that while computing codebook lengths
-		int len = floor( log( codebook[(int)c] )/log( 2 ) );// Obtain code length. this is a slightly sub-optimal method.
-		int xPtr = 0;
+		//int len = floor( log( codebook[(int)c] )/log( 2 ) );// Obtain code length. this is a slightly sub-optimal method.
+		//int xPtr = 0;
 		
 		// Retreive N-bit encoding: Form from
 		Node* x = codebook[(int)c];
@@ -188,7 +192,7 @@ void encode( char* data, int length, Node** codebook, char* buffer, int* outLeng
 		
 		// If initially the pointer pointed to an empty char, reduce one added char.
 		if( bitptr % 8 == 0 )
-			*outLength --;
+			(*outLength) --;
 		
 		// Set the current ptr to new bit ptr.
 		bitptr = finalPtr;
@@ -197,4 +201,32 @@ void encode( char* data, int length, Node** codebook, char* buffer, int* outLeng
 	
 }
 
+
+char getBit( char* data, int bitptr ){
+	char c = *(data + (bitptr/8));
+	return ( ( c & ( 1 << bitptr%8 ) ) == 0 ): 0 ? 1;
+}
+git 
+void decode( char* data, int length, Node* root, char* buffer, int* outLength ){
+	Node* curr = root;
+	int bitptr = 0;
+	
+	int bufferPtr = 0;
+	while(1){
+		char c = getBit( data, bitptr );
+		if( c == 0 )
+			curr = curr->left;
+		else
+			curr = curr->right;
+		if( curr->left == NULL ){
+			buffer[bufferPtr] = curr->data;
+			bufferPtr++;
+			curr = root;
+		}
+		bitptr++;
+		if( bitptr == length*8 )
+			break;
+	}
+	return;
+}
 

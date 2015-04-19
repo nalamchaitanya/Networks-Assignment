@@ -8,7 +8,8 @@
 
 #include "ChannelCoder.h"
 #define CRC_LENGTH 4
-
+#include <stdlib.h>
+#include <string.h>
 // TODO: Include the CRC algo header.
 
 // Encode the packet's contents by adding a CRC to the end. Note: this lengthens the channel
@@ -30,11 +31,11 @@ int channelDetect( Packet* p ){
     makeCRC( p->data, p->length - CRC_LENGTH, buffer );// Put other CRC info if necessary.
     int cmp = strcmp( crc, buffer );
     if( cmp == 0 ){
-        
-    }
+        return 1;
+    }else return 0;
 }
 
 // Remove the CRC bits from the Packet.
 void channelDecode( Packet* p ){
-
+    p->length -= CRC_LENGTH;// Just reduce the length.
 }

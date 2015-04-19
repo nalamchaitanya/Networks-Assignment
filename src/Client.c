@@ -32,8 +32,9 @@
 #include "strings.h"
 #include "string.h"
 #include "include/DgFunctions.h"
-#include "include/Packet.h"
-#include "include/Encoder.h"
+#include "Packet.h"
+#include "ChannelCoder.h"
+#include "SourceCoder.h"
 
 /*-------------------------------------------------------------------------
  *  Usage -- Prints the usage for the program
@@ -105,7 +106,7 @@ int  main (int argc, char **argv)
   
     if (bind (sockFd, (struct sockaddr *) &clientAddr ,sizeof(clientAddr)) < 0) {
       printf(" client: can't bind  local address\n");
-    exit(-1);
+      exit(-1);
     }
    
     sendMsg = encode( sendMsg, strlen( sendMsg ) );
@@ -116,7 +117,7 @@ int  main (int argc, char **argv)
       tempString[2] = '\0';
       strcat(tempString, sendMsg);
       printf ("Message Sent = %s\n", sendMsg);
-     DgClient(tempString, sockFd, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
+      DgClient(tempString, sockFd, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
     }
     close(sockFd);
     exit(0);

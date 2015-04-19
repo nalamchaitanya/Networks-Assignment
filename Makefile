@@ -25,7 +25,7 @@ $(BINDIR)/Server : $(OBJDIR)/Server.o \
 	-I$(INCDIR)	
 
 $(BINDIR)/Client : $(OBJDIR)/Client.o \
-	$(OBJDIR)/DgClient.o 
+	$(OBJDIR)/DgClient.o $(OBJDIR)/Huffman.o $(OBJDIR)/Entropy.o $(OBJDIR)/SourceCoder.o $(OBJDIR)/ChannelCoder.o
 	$(CC) -m32 -g -o $(BINDIR)/Client  \
 	$(OBJDIR)/Client.o \
 	$(OBJDIR)/DgClient.o \
@@ -41,7 +41,21 @@ $(OBJDIR)/Client.o : $(SRCDIR)/Client.c
 	$(CC) $(CFLAGS) -o $(OBJDIR)/Client.o $(SRCDIR)/Client.c 
 
 $(OBJDIR)/DgClient.o : $(SRCDIR)/DgClient.c 
-	$(CC) $(CFLAGS) -o $(OBJDIR)/DgClient.o $(SRCDIR)/DgClient.c 
+	$(CC) $(CFLAGS) -o $(OBJDIR)/DgClient.o $(SRCDIR)/DgClient.c
+
+$(OBJDIR)/Huffman.o : $(SRCDIR)/Huffman.c
+	$(CC) $(CFLAGS) -o $(OBJDIR)/Huffman.o $(SRCDIR)/Huffman.c
+
+$(OBJDIR)/Entropy.o : $(SRCDIR)/Entropy.c
+	$(CC) $(CFLAGS) -o $(OBJDIR)/Entropy.o $(SRCDIR)/Entropy.c
+
+$(OBJDIR)/ChannelCoder.o : $(SRCDIR)/ChannelCoder.c
+	$(CC) $(CFLAGS) -o $(OBJDIR)/ChannelCoder.o $(SRCDIR)/ChannelCoder.c
+
+$(OBJDIR)/SourceCoder.o : $(SRCDIR)/SourceCoder.c
+	$(CC) $(CFLAGS) -o $(OBJDIR)/SourceCoder.o $(SRCDIR)/SourceCoder.c
+
+
 clean: 
 	rm -fr $(BINDIR)/Server $(BINDIR)/Client $(OBJDIR)/Server.o \
 	$(OBJDIR)/DgEcho.o $(OBJDIR)/Client.o $(OBJDIR)/DgClient.o 
