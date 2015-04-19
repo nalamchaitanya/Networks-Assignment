@@ -32,6 +32,9 @@
 #include "strings.h"
 #include "string.h"
 #include "include/DgFunctions.h"
+#include "include/Packet.h"
+#include "include/Encoder.h"
+
 /*-------------------------------------------------------------------------
  *  Usage -- Prints the usage for the program
  *    Args:	
@@ -105,6 +108,8 @@ int  main (int argc, char **argv)
     exit(-1);
     }
    
+    sendMsg = encode( sendMsg, strlen( sendMsg ) );
+    
     for (i = 0; i < 10; i++) {
       tempString[0] = (char) (i+48);
       tempString[1] = ' ';

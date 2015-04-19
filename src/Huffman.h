@@ -11,5 +11,32 @@
 
 #include <stdio.h>
 
-void huffmanCode( int* frequency, int* codebook );
+typedef long long LLONG;
+
+
+typedef struct _Node{
+    int freq;
+    char src;
+    
+    // for the huffman tree.
+    Node* left;
+    Node* right;
+    // for reverse trace.
+    Node* parent;
+    
+    // holds the next pointer.
+    Node* next;
+    
+} Node;
+
+
+typedef struct _BitStream{
+    
+    char bit;
+    BitStream* next;
+    
+} BitStream;
+
+void huffmanCode( int* frequency, BitStream** codebook );
+
 #endif /* defined(__HuffmanTransceiver__Huffman__) */

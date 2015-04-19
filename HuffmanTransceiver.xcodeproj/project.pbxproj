@@ -9,8 +9,8 @@
 /* Begin PBXFileReference section */
 		600511D21AD9041C00CF8D80 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		600511D31AD909A000CF8D80 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
-		600511D51AD9132600CF8D80 /* Client */ = {isa = PBXFileReference; lastKnownFileType = file; path = Client; sourceTree = "<group>"; };
-		600511D61AD9132600CF8D80 /* Server */ = {isa = PBXFileReference; lastKnownFileType = file; path = Server; sourceTree = "<group>"; };
+		600511D51AD9132600CF8D80 /* Client */ = {isa = PBXFileReference; lastKnownFileType = text; path = Client; sourceTree = "<group>"; };
+		600511D61AD9132600CF8D80 /* Server */ = {isa = PBXFileReference; lastKnownFileType = text; path = Server; sourceTree = "<group>"; };
 		600511D81AD9132600CF8D80 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
 		600511D91AD9132600CF8D80 /* HuffmanTransceiver */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = HuffmanTransceiver; sourceTree = "<group>"; };
 		600511DB1AD9132600CF8D80 /* Client.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = Client.o; sourceTree = "<group>"; };
@@ -29,6 +29,10 @@
 		600511EB1AD91D2000CF8D80 /* Huffman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Huffman.h; path = ../Huffman.h; sourceTree = "<group>"; };
 		600511EC1AD9366E00CF8D80 /* Packet.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Packet.c; sourceTree = "<group>"; };
 		600511ED1AD9366E00CF8D80 /* Packet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Packet.h; path = ../Packet.h; sourceTree = "<group>"; };
+		605F7F321AE0306000F8747B /* SourceCoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = SourceCoder.c; sourceTree = "<group>"; };
+		605F7F331AE0306000F8747B /* SourceCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SourceCoder.h; path = ../SourceCoder.h; sourceTree = "<group>"; };
+		605F7F341AE0340800F8747B /* ChannelCoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ChannelCoder.c; path = src/ChannelCoder.c; sourceTree = SOURCE_ROOT; };
+		605F7F351AE0340800F8747B /* ChannelCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelCoder.h; path = src/ChannelCoder.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -77,6 +81,7 @@
 		600511E01AD9132600CF8D80 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				605F7F341AE0340800F8747B /* ChannelCoder.c */,
 				600511E11AD9132600CF8D80 /* Client.c */,
 				600511E21AD9132600CF8D80 /* DgClient.c */,
 				600511E31AD9132600CF8D80 /* DgEcho.c */,
@@ -85,6 +90,7 @@
 				600511E81AD9164200CF8D80 /* Entropy.c */,
 				600511EA1AD91D2000CF8D80 /* Huffman.c */,
 				600511EC1AD9366E00CF8D80 /* Packet.c */,
+				605F7F321AE0306000F8747B /* SourceCoder.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -92,10 +98,12 @@
 		600511E41AD9132600CF8D80 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				605F7F331AE0306000F8747B /* SourceCoder.h */,
 				600511ED1AD9366E00CF8D80 /* Packet.h */,
 				600511EB1AD91D2000CF8D80 /* Huffman.h */,
 				600511E51AD9132600CF8D80 /* DgFunctions.h */,
 				600511E71AD9159C00CF8D80 /* Entropy.h */,
+				605F7F351AE0340800F8747B /* ChannelCoder.h */,
 			);
 			path = include;
 			sourceTree = "<group>";

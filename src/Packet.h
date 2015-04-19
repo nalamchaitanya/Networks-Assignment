@@ -11,8 +11,9 @@
 
 #include <stdio.h>
 
-typedef struct _Packet
-{
+
+typedef struct _Packet{
+    Packet* next;
     char* data;
     int length;
 } Packet;
