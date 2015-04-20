@@ -32,10 +32,48 @@ Node* makeNodeList( int* frequency, int numChars ){
     return start;
 }
 
-Node* sortNodes( Node* in, Node** out )
+Node* sortNodes( Node* in)
 {
     // Sort by frequency.
-	    
+    //Converts the list into array.
+    int len = sizeOfList(in);
+    Node* arr = convertListToArray(in,len);
+    qsort(arr,len,sizeof(Node),Comparator);
+    return arr;  
+}
+
+int Comparator(const void *a,const void *b)
+{
+	int p,q;
+	p = (*(Node*)a).freq;
+	q = (*(Node*)b).freq;
+	return (p-q);
+}
+
+int sizeOfList(Node* in)
+{
+	int i = 0;
+	Node *temp = in;
+	while(temp!=NULL)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return i;
+}
+
+Node* convertListToArray(Node* in, int size)
+{
+	Node* arr = (Node*)malloc(sizeof(Node)*size);
+	Node* temp = in;
+	int i = 0;
+	while(temp!=NULL)
+	{
+		arr[i] = *temp;
+		i++;
+		temp = temp->next;
+	}
+	return arr;
 }
 
 Node* insertSorted( Node* arr, Node* n ){
