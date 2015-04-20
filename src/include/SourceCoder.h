@@ -14,6 +14,6 @@
 
 char* sourceCode( char* data, int length );
 
-char* sourceDecode( char* data, int length, long* freq );
+char* sourceDecode( char* data, int length, long* freq, int expectedLength );
 
 #endif /* defined(__HuffmanTransceiver__Encoder__) */

@@ -32,24 +32,6 @@ Node* makeNodeList( int* frequency, int numChars ){
     return start;
 }
 
-Node* sortNodes( Node* in)
-{
-    // Sort by frequency.
-    //Converts the list into array.
-    int len = sizeOfList(in);
-    Node* arr = convertListToArray(in,len);
-    qsort(arr,len,sizeof(Node),Comparator);
-    return arr;  
-}
-
-int Comparator(const void *a,const void *b)
-{
-	int p,q;
-	p = (*(Node*)a).freq;
-	q = (*(Node*)b).freq;
-	return (p-q);
-}
-
 int sizeOfList(Node* in)
 {
 	int i = 0;
@@ -74,6 +56,25 @@ Node* convertListToArray(Node* in, int size)
 		temp = temp->next;
 	}
 	return arr;
+}
+
+int Comparator(const void *a,const void *b)
+{
+	int p,q;
+	p = (*(Node*)a).freq;
+	q = (*(Node*)b).freq;
+	return (p-q);
+}
+
+void sortNodes( Node* in, Node** out )
+{
+    // Sort by frequency.
+    //Converts the list into array.
+    int len = sizeOfList(in);
+    Node* arr = convertListToArray(in,len);
+    qsort(arr,len,sizeof(Node),Comparator);
+
+    *out = arr;
 }
 
 Node* insertSorted( Node* arr, Node* n ){
@@ -243,9 +244,9 @@ void encode( char* data, int length, Node** codebook, char* buffer, int* outLeng
 
 char getBit( char* data, int bitptr ){
 	char c = *(data + (bitptr/8));
-	return ( ( c & ( 1 << bitptr%8 ) ) == 0 ): 0 ? 1;
+	return ( ( c & ( 1 << bitptr%8 ) ) == 0 )? 0 : 1;
 }
-git 
+
 void decode( char* data, int length, Node* root, char* buffer, int* outLength ){
 	Node* curr = root;
 	int bitptr = 0;
@@ -258,7 +259,7 @@ void decode( char* data, int length, Node* root, char* buffer, int* outLength ){
 		else
 			curr = curr->right;
 		if( curr->left == NULL ){
-			buffer[bufferPtr] = curr->data;
+			buffer[bufferPtr] = curr->src;
 			bufferPtr++;
 			curr = root;
 		}

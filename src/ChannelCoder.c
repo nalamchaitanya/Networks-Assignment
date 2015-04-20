@@ -15,9 +15,11 @@
 // Encode the packet's contents by adding a CRC to the end. Note: this lengthens the channel
 void channelCode( Packet* p ){
     char *buffer = malloc( sizeof( char ) * CRC_LENGTH );
+   
     makeCRC( p->data, p->length, buffer );// Put other CRC info if necessary.
     
     // Concatenate the data to the end of the buffer.
+    // TODO: Make sure no errors arise because the buffer in question isn't null-terminated.
     strcat( p->data, buffer );
     // Increment length.
     p->length += CRC_LENGTH;
