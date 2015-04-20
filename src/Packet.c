@@ -10,7 +10,8 @@
 #include <math.h>
 
 // Make a packet of a particular length.
-Packet* _makePacket( char* data, int length ){
+Packet* _makePacket( char* data, int length )
+{
     Packet* p = malloc( sizeof(Packet) );
     
     memcpy( p->data, data, length * sizeof(char) );
@@ -31,7 +32,8 @@ Packet* _makeEmptyPacket( int length ){
 // The operations of putting together a codebook and cutting it up into packets have been
 // merged into one for simplicity.
 
-void setPacketBit( int bit, Packet* p ){
+void setPacketBit( int bit, Packet* p )
+{
     // in progress.
     char* dat = p->data;
     dat[0];
