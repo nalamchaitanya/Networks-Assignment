@@ -20,29 +20,32 @@ void makeCRC( char* data, int length, char* buffer ){
 }
 // Encode the packet's contents by adding a CRC to the end. Note: this lengthens the channel
 void channelCode( Packet* p ){
-    char *buffer = malloc( sizeof( char ) * CRC_LENGTH );
    
-    makeCRC( p->data, p->length, buffer );// Put other CRC info if necessary.
-    
+    char parity = getParity(p->data,p->length);
     // Concatenate the data to the end of the buffer.
     // TODO: Make sure no errors arise because the buffer in question isn't null-terminated.
-    strcat( p->data, buffer );
+    char* temp = (char*)malloc(sizeof(char)*2);
+    *temp = parity;
+    *(temp+1) = '\0';
+    strcat( p->data, &parity );
     // Increment length.
-    p->length += CRC_LENGTH;    
+    p->length += 1;
 }
 
 // Check the packet's CRC bits.
 int channelDetect( Packet* p ){
-    char* crc = p->data + ( p->length - 1 - CRC_LENGTH );
-    char *buffer = malloc( sizeof( char ) * CRC_LENGTH );
-    makeCRC( p->data, p->length - CRC_LENGTH, buffer );// Put other CRC info if necessary.
-    int cmp = strcmp( crc, buffer );
-    if( cmp == 0 ){
+    char parity = getParity(p->data,p->length);
+    char checkParity = channelDecode(p);
+    if(parity == checkParity)
         return 1;
-    }else return 0;
+    else
+        return 0;
 }
 
 // Remove the CRC bits from the Packet.
-void channelDecode( Packet* p ){
-    p->length -= CRC_LENGTH;// Just reduce the length.
+char channelDecode( Packet* p ){
+    char parity = *(p->data+p->length-1);
+    p->data+(p->length-1) = '\0';
+    p->length --;   // Just reduce the length.
+    return parity;
 }
