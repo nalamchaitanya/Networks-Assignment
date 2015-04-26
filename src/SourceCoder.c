@@ -14,9 +14,8 @@
 
 char* sourceCode( char* data, int length ){
     // Get frequencies of Char data here.
-    int* frequency;
+    long* frequency;
     // ---
-    LLONG* codebook;// Max-length 128-bit codes.
     
     char* buffer = malloc( sizeof( char ) * length );
     int finalLen = 0;
@@ -44,7 +43,7 @@ char* sourceDecode( char* data, int length, long* frequency, int expectedLen ){
     
     int finalLen = 0;
     char* buffer = malloc( sizeof( char ) * expectedLen );
-    decode( data, length, root, buffer, &finalLen );
+    //decode( data, length, root, buffer, &finalLen );
     return buffer;
     
 }

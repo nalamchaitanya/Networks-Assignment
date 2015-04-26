@@ -15,7 +15,7 @@ typedef long long LLONG;
 
 
 typedef struct _Node{
-    int freq;
+    long freq;
     char src;
     
     // for the huffman tree.
@@ -39,6 +39,11 @@ typedef struct _BitStream{
 
 
 void encode( char* data, int length, Node** codebook, char* buffer, int* outLength );
-void makeHuffmanTree( Node** out, int* frequency, int numChars, Node** pListBuf );
+void makeHuffmanTree( Node** out, long* frequency, int numChars, Node** pListBuf );
+void decode( char* data, int length, Node* root, char* buffer, int expected );
+
+char traceBit( Node* x );
+void setBit( char* c, int bitptr, char bit );
+void fillCharSeq( char* c, int* bitptr, Node* x );
 
 #endif /* defined(__HuffmanTransceiver__Huffman__) */

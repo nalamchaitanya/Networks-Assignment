@@ -9,6 +9,7 @@
 #include "Huffman.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 Node* newNode( char src, int freq ){
     Node* n = (Node*) malloc( sizeof(Node) );
@@ -21,7 +22,7 @@ Node* newNode( char src, int freq ){
     return n;
 }
 
-Node* makeNodeList( int* frequency, int numChars ){
+Node* makeNodeList( long* frequency, int numChars ){
     Node* start = newNode( (char)0, frequency[0] );
     Node* prev = start;
     for( int i = 1; i < numChars; i++ ){
@@ -66,15 +67,27 @@ int Comparator(const void *a,const void *b)
 	return (p-q);
 }
 
-void sortNodes( Node* in, Node** out )
+
+void relink( Node* n, int length ){
+	int i;
+	for ( i = 0; i < length - 1; i++ ) {
+		n->next = ( n + 1 );
+		n++;
+	}
+    n->next = NULL;
+}
+
+void sortNodes( Node* in, Node** out, Node** oldCopy )
 {
     // Sort by frequency.
     //Converts the list into array.
-    int len = sizeOfList(in);
-    Node* arr = convertListToArray(in,len);
-    qsort(arr,len,sizeof(Node),Comparator);
-
+    int len = sizeOfList( in );
+    Node* arr = convertListToArray( in, len);
+    *oldCopy = arr;
+    qsort( arr, len, sizeof(Node), Comparator );
+	relink( arr, len );
     *out = arr;
+
 }
 
 Node* insertSorted( Node* arr, Node* n ){
@@ -87,8 +100,15 @@ Node* insertSorted( Node* arr, Node* n ){
 	
 	Node* curr = arr;
     while (1) {
-		if( n->freq < curr->freq ){
-			prev->next = n;
+		if( curr == NULL ){
+            prev->next = n;
+            n->next = NULL;
+            break;
+        }
+        if( n->freq < curr->freq ){
+			if( prev != curr ){
+                prev->next = n;
+            }
 			n->next = curr;
 			break;
 		}
@@ -108,18 +128,22 @@ void treeToPCodeBook( Node* root, LLONG* pcodebook, LLONG code ){
     }
 }
 
-void makeHuffmanTree( Node** out, int* frequency, int numChars, Node** pListBuf ){
+void makeHuffmanTree( Node** out, long* frequency, int numChars, Node** pListBuf ){
 	Node* start = makeNodeList( frequency, numChars );
 	
 	// Store base pointers in the list for quick access while encoding.
-	for (int i = 0; i < numChars; i ++ ) {
-		pListBuf[i] = start + i;
-	}
 	
 	Node* sorted;
+    Node* arr;
 	//Assume sorted is a new array.
-	sortNodes( start, &sorted );
+
+
+	sortNodes( start, &sorted, &arr );
 	
+	for (int i = 0; i < numChars; i++ ) {
+		pListBuf[i] = arr + i;
+	}
+
 	while (1) {
 		Node* n1 = sorted;
 		Node* n2 = sorted->next;
@@ -127,15 +151,18 @@ void makeHuffmanTree( Node** out, int* frequency, int numChars, Node** pListBuf 
 			break;
 		Node* merged = newNode( 0, n1->freq + n2->freq );
 		
+        printf("Merging %ld, %ld\n", n1->freq, n2->freq);fflush( stdout );
 		merged->left = n1;
 		merged->right = n2;
 		
 		n1->parent = merged;
 		n2->parent = merged;
 		
-		sorted = sorted->next->next;
-		insertSorted( sorted, merged );
-		
+		sorted = (sorted->next->next);
+        if( sorted != NULL )
+		    sorted = insertSorted( sorted, merged );
+        else
+            sorted = merged;
 	}
 	*out = sorted;
 	
@@ -146,6 +173,7 @@ void setBit( char* c, int bitptr, char bit ){
 	*(c) &= ~(1 << bitptr);
 	*(c) |= (bit << bitptr);
 }
+
 char traceBit( Node* x ){
 	if( x->parent->left == x )
 		return 0;
@@ -153,51 +181,34 @@ char traceBit( Node* x ){
 		return 1;
 }
 
-int _fillCharSeq( char* c, int bitptr, Node* x ){
+void abcdefg( char* c, Node* x, int* bitptr ){
+    printf("BIT:%d", *bitptr);fflush(stdout);
 	if( x->parent->parent == NULL ){
 		// Reached the top
 		// Set bit.
 		char bit = traceBit( x );
-		setBit( c, bitptr, bit );
-		return bitptr + 1;
+		setBit( c + (int)((*bitptr)/8), (*bitptr)%8, bit );
+        printf("T:%d@%d\n", (int)(bit), *bitptr);fflush(stdout);
+        
+        (*bitptr)++;
+		return;
 	}else{
 		// Go up the tree and set the corresponding bits on the way down.
-		int bitptr = _fillCharSeq( c + (bitptr/8), bitptr, x->parent );
+        //printf("In:%c@%d", x->src, *bitptr);
+		abcdefg( c, x->parent, bitptr );
 		// We use recursion to set bits from the top rather than form the bottom.
 		char bit = traceBit( x );
-		setBit( c, bitptr, bit );
-		return bitptr + 1;
+		setBit( c + (int)((*bitptr)/8), (*bitptr)%8, bit );
+        printf("S:%d@%d\n", (int)(bit), *bitptr );fflush(stdout);
+
+		(*bitptr)++;
+        return;
 	}
 }
 
-int fillCharSeq( char* c, int bitptr, Node* x ){
-	/*
-	 *(c) &= ~( ( 1 << len ) - 1 ) << bitptr;// Set bits of interest to 0.
-	 *(c) |= ( ( x >> start ) & ( ( 1 << len ) - 1 ) ) << bitptr;// Set bits of interest to X[ start.. start+len ].*/
-	
-	/*int numBitsWrt = 0;
-	 while( true ){
-	 char bit = nextTreeBit( xInOut );
-	 if( bit == 2 )
-	 return numBitsWrt;
-	 else{
-	 // Set the bitptr-th the bit to the value of 'bit'
-	 *(c) &= ~(1 << bitptr);
-	 *(c) |= (bit << bitptr);
-	 }
-	 numBitsWrt++;
-	 
-	 if( bitptr == 7 ){
-	 return numBitsWrt;
-	 }
-	 
-	 bitptr++;
-	 }*/
-	
-	return _fillCharSeq( c, bitptr, x );
+void fillCharSeq( char* c, int* bitptr, Node* x ){	
+	abcdefg( c, x, bitptr);
 }
-
-
 
 
 
@@ -218,24 +229,19 @@ void encode( char* data, int length, Node** codebook, char* buffer, int* outLeng
 		//int xPtr = 0;
 		
 		// Retreive N-bit encoding: Form from
-		Node* x = codebook[(int)c];
-		
-		
-		
-		
+		Node* x = codebook[c];
+			
 		// Calculate the start ptr for writing into current char.
-		int wrtPtr = bitptr;
-		
 		// transfer bits from x[ xPtr ... xPtr + wrtLen ] to curr[ wrtPtr ... wrtPtr + wrtLen ];
-		int finalPtr = fillCharSeq( curr, wrtPtr, x );
-		*outLength+= (finalPtr/8) + 1;
-		
+		fillCharSeq( curr, &bitptr, x );
+		//*outLength+= (finalPtr/8) + 1;
+        printf("written: %c\n" ,c);
 		// If initially the pointer pointed to an empty char, reduce one added char.
-		if( bitptr % 8 == 0 )
-			(*outLength) --;
+		//if( bitptr % 8 == 0 )
+		//	(*outLength) --;
 		
 		// Set the current ptr to new bit ptr.
-		bitptr = finalPtr;
+		//bitptr = finalPtr;
 		
 	}
 	
@@ -247,7 +253,7 @@ char getBit( char* data, int bitptr ){
 	return ( ( c & ( 1 << bitptr%8 ) ) == 0 )? 0 : 1;
 }
 
-void decode( char* data, int length, Node* root, char* buffer, int* outLength ){
+void decode( char* data, int length, Node* root, char* buffer, int expected ){
 	Node* curr = root;
 	int bitptr = 0;
 	
@@ -260,11 +266,12 @@ void decode( char* data, int length, Node* root, char* buffer, int* outLength ){
 			curr = curr->right;
 		if( curr->left == NULL ){
 			buffer[bufferPtr] = curr->src;
+            expected--;
 			bufferPtr++;
 			curr = root;
 		}
 		bitptr++;
-		if( bitptr == length*8 )
+		if( expected == 0 )
 			break;
 	}
 	return;

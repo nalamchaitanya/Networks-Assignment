@@ -109,7 +109,7 @@ int  main (int argc, char **argv)
       exit(-1);
     }
    
-    sendMsg = encode( sendMsg, strlen( sendMsg ) );
+    //sendMsg = sourceCode( sendMsg, strlen( sendMsg ) );
     
     for (i = 0; i < 10; i++) {
       tempString[0] = (char) (i+48);

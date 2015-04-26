@@ -15,7 +15,11 @@ INCDIR = ./src/include/
 CFLAGS = -g -m32 -c -I$(INCDIR)
 CC = gcc
 
-all :	$(BINDIR)/Server $(BINDIR)/Client 
+all :	$(BINDIR)/Server $(BINDIR)/Client $(BINDIR)/Test 
+
+$(BINDIR)/Test : $(SRCDIR)/Test.c
+	$(CC) -m32 -g -o $(BINDIR)/Test \
+	-I$(INCDIR)	$(SRCDIR)/Test.c $(OBJDIR)/Huffman.o
 
 $(BINDIR)/Server : $(OBJDIR)/Server.o \
 	$(OBJDIR)/DgEcho.o 
@@ -29,6 +33,10 @@ $(BINDIR)/Client : $(OBJDIR)/Client.o \
 	$(CC) -m32 -g -o $(BINDIR)/Client  \
 	$(OBJDIR)/Client.o \
 	$(OBJDIR)/DgClient.o \
+	$(OBJDIR)/Huffman.o \
+	$(OBJDIR)/Entropy.o \
+	$(OBJDIR)/SourceCoder.o \
+	$(OBJDIR)/ChannelCoder.o \
 	-I$(INCDIR)
 
 $(OBJDIR)/Server.o : $(SRCDIR)/Server.c
@@ -56,9 +64,12 @@ $(OBJDIR)/SourceCoder.o : $(SRCDIR)/SourceCoder.c
 	$(CC) $(CFLAGS) -o $(OBJDIR)/SourceCoder.o $(SRCDIR)/SourceCoder.c
 
 
+
 clean: 
 	rm -fr $(BINDIR)/Server $(BINDIR)/Client $(OBJDIR)/Server.o \
-	$(OBJDIR)/DgEcho.o $(OBJDIR)/Client.o $(OBJDIR)/DgClient.o 
-
+	$(OBJDIR)/DgEcho.o $(OBJDIR)/Client.o $(OBJDIR)/DgClient.o \
+    $(OBJDIR)/Huffman.o $(OBJDIR)/Entropy.o $(OBJDIR)/SourceCoder.o \
+	$(OBJDIR)/ChannelCoder.o $(BINDIR)/Test
+	
 
 

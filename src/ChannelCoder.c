@@ -7,11 +7,17 @@
 //
 
 #include "ChannelCoder.h"
-#define CRC_LENGTH 4
+#include "CRC.h"
+#define CRC_BITS 4
+#define CRC_LENGTH 1
 #include <stdlib.h>
 #include <string.h>
 // TODO: Include the CRC algo header.
 
+void makeCRC( char* data, int length, char* buffer ){
+    buffer[0] = 0;
+    return;
+}
 // Encode the packet's contents by adding a CRC to the end. Note: this lengthens the channel
 void channelCode( Packet* p ){
     char *buffer = malloc( sizeof( char ) * CRC_LENGTH );
