@@ -22,8 +22,7 @@ void channelCode( Packet* p ){
     // TODO: Make sure no errors arise because the buffer in question isn't null-terminated.
     strcat( p->data, buffer );
     // Increment length.
-    p->length += CRC_LENGTH;
-    
+    p->length += CRC_LENGTH;    
 }
 
 // Check the packet's CRC bits.

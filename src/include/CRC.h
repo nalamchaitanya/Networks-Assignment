@@ -15,4 +15,10 @@ char* getCRC(char *packet,int packetSize,char *plyn,int plynSize,int crcSize);
 //appends it to the packet.
 char* appendCRC(char* packet,char* crc);
 
+//gives the parity 
+char* getParity(char *packet,int size);
+
+//appends it to packet
+char* appendParity(char *packet,char *parity);
+
 #endif

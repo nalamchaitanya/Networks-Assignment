@@ -84,3 +84,36 @@ char* appendCRC(char* packet,char* crc)
 {
 	return strcat(packet,crc);
 }
+
+//gives the parity 
+char getParity(char *packet,int size)
+{
+	char parity = '\0';
+	int i,j;
+	for(i=0;i<size;i++)
+	{
+		for(j=0;j<8;j++)
+			parity ^= getBit(packet+i,j);
+	}
+	return parity;
+}
+
+//appends it to packet
+void appendParity(char *packet,int size,char parity)
+{
+	setBit(packet+size-1,0,parity);
+}
+
+/* Helper functions setBit and traceBit */
+void setBit( char* c, int bitptr, char bit ){
+	*(c) &= ~(1 << bitptr);
+	*(c) |= (bit << bitptr);
+}
+
+char getBit(char* c,int bitptr)
+{
+	char temp = *c;
+	temp &= (1<<bitptr);
+	temp = temp>>bitptr;
+	return temp;
+}
