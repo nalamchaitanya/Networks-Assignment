@@ -28,7 +28,7 @@ double calculateEntropy( char* data, int size )
     return entropy;
 }
 
-long int* calculateFrequency(char* data,int size)
+long* calculateFrequency(char* data,int size)
 {
 	long *freq = (long*)malloc(sizeof(long)*256);
     int i;

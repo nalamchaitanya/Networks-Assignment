@@ -9,12 +9,12 @@
 #include "SourceCoder.h"
 #include "Huffman.h"
 #include "Packet.h"
-
+#include "Entropy.h"
 #include <stdlib.h>
 
 char* sourceCode( char* data, int length ){
     // Get frequencies of Char data here.
-    long* frequency;
+    long* frequency = caluclateFrequency(data,length);
     // ---
     
     char* buffer = malloc( sizeof( char ) * length );

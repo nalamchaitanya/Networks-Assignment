@@ -111,14 +111,25 @@ int  main (int argc, char **argv)
    
     //sendMsg = sourceCode( sendMsg, strlen( sendMsg ) );
     
-    for (i = 0; i < 10; i++) {
+    /*for (i = 0; i < 10; i++) {
       tempString[0] = (char) (i+48);
       tempString[1] = ' ';
       tempString[2] = '\0';
       strcat(tempString, sendMsg);
       printf ("Message Sent = %s\n", sendMsg);
       DgClient(tempString, sockFd, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
+    }*/
+
+    int i ;
+    i = 0;
+    while(1)
+    {
+      scanf("%s",&sendMsg);
+      printf("Message Sending = %s\n", sendMsg );
+      
+      DgClient(sendMsg,sockFd, (struct sockaddr *) &serverAddr, sizeof(serverAddr));
     }
+
     close(sockFd);
     exit(0);
     return(0);
